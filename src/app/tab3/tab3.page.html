@@ -14,5 +14,14 @@
   <div padding *ngFor="let vehiculo of (vehiculos | async)">
     <p>{{vehiculo.placa}}</p>
     <p>{{vehiculo.nombre}}</p>
+    <p>{{vehiculo.marca}}</p>
+    <p>{{vehiculo.color}}</p>
+  </div>
+
+  <div padding>
+    <ion-button (click)="eliminar()"></ion-button>
+  </div>
+  <div padding>
+    <ion-button (click)="actualizar()"></ion-button>
   </div>
 </ion-content>

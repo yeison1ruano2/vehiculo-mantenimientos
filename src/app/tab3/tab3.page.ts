@@ -35,4 +35,34 @@ export class Tab3Page implements OnInit {
         console.log(error);
       });
   }
+
+  eliminar() {
+    this.vehiculoService
+      .eliminarVehiculo('PXC94D')
+      .then(() => {
+        console.log('Vehiculo eliminado con éxito');
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  actualizar() {
+    this.vehiculo = {
+      nombre: 'RTX 150',
+      placa: 'PXC94DS',
+      marca: 'Akt',
+      tipoVehiculo: 'Carro',
+      anio: 2015,
+      color: 'Blanca',
+    };
+    this.vehiculoService
+      .actualizarVehiculo(this.vehiculo)
+      .then(() => {
+        console.log('Vehiculo actualizado con exito');
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
 }

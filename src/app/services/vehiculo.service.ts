@@ -20,4 +20,14 @@ export class VehiculoService {
   obtenerVehiculos(): Observable<Vehiculo[]> {
     return this.db.list<Vehiculo>(`vehiculos`).valueChanges();
   }
+
+  eliminarVehiculo(placa: string): Promise<void> {
+    return this.db.list<Vehiculo>('vehiculos').remove(placa);
+  }
+
+  actualizarVehiculo(vehiculo: Vehiculo): Promise<void> {
+    return this.db
+      .object<Vehiculo>(`vehiculos/${vehiculo.placa}`)
+      .update(vehiculo);
+  }
 }
