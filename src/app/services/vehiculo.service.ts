@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 export class VehiculoService {
   constructor(private db: AngularFireDatabase) {}
 
-  guardarVehiculo(vehiculo: Vehiculo) {
+  crearVehiculo(vehiculo: Vehiculo) {
     return this.db.object(`vehiculos/${vehiculo.placa}`).set(vehiculo);
   }
 
@@ -18,11 +18,17 @@ export class VehiculoService {
   }
 
   obtenerVehiculos(): Observable<Vehiculo[]> {
-    return this.db.list<Vehiculo>(`vehiculos`).valueChanges();
+    return this.db
+      .list<Vehiculo>('vehiculos', (ref) =>
+        ref.orderByChild('activo').equalTo(true)
+      )
+      .valueChanges();
   }
 
   eliminarVehiculo(placa: string): Promise<void> {
-    return this.db.list<Vehiculo>('vehiculos').remove(placa);
+    return this.db
+      .object<Vehiculo>(`vehiculos/${placa}`)
+      .update({ activo: false });
   }
 
   actualizarVehiculo(vehiculo: Vehiculo): Promise<void> {
