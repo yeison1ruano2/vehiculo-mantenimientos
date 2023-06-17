@@ -22,6 +22,7 @@
     "@angular/platform-browser": "^16.0.0",
     "@angular/platform-browser-dynamic": "^16.0.0",
     "@angular/router": "^16.0.0",
+    "@capacitor/android": "5.0.4",
     "@capacitor/app": "5.0.2",
     "@capacitor/core": "5.0.4",
     "@capacitor/haptics": "5.0.2",
@@ -30,7 +31,6 @@
     "@ionic/angular": "^7.0.0",
     "firebase": "^9.22.1",
     "ionicons": "^7.0.0",
-    "primeng": "^14.2.8-lts",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.13.0"
