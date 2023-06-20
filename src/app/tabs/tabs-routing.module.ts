@@ -40,6 +40,27 @@ const routes: Routes = [
             (m) => m.EditarvehiculoPageModule
           ),
       },
+      {
+        path: 'mantenimientos',
+        loadChildren: () =>
+          import('../mantenimientos/mantenimientos.module').then(
+            (m) => m.MantenimientosPageModule
+          ),
+      },
+      {
+        path: 'nuevomantenimiento',
+        loadChildren: () =>
+          import('../nuevomantenimiento/nuevomantenimiento.module').then(
+            (m) => m.NuevomantenimientoPageModule
+          ),
+      },
+      {
+        path: 'editarmantenimiento',
+        loadChildren: () =>
+          import('../editarmantenimiento/editarmantenimiento.module').then(
+            (m) => m.EditarmantenimientoPageModule
+          ),
+      },
     ],
   },
   {

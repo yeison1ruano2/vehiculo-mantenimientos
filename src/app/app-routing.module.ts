@@ -4,29 +4,53 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
+    loadChildren: () =>
+      import('./tabs/tabs.module').then((m) => m.TabsPageModule),
   },
   {
     path: 'vehiculos',
-    loadChildren: () => import('./vehiculos/vehiculos.module').then( m => m.VehiculosPageModule)
+    loadChildren: () =>
+      import('./vehiculos/vehiculos.module').then((m) => m.VehiculosPageModule),
   },
   {
     path: 'repuestos',
-    loadChildren: () => import('./repuestos/repuestos.module').then( m => m.RepuestosPageModule)
+    loadChildren: () =>
+      import('./repuestos/repuestos.module').then((m) => m.RepuestosPageModule),
   },
   {
     path: 'nuevovehiculo',
-    loadChildren: () => import('./nuevovehiculo/nuevovehiculo.module').then( m => m.NuevovehiculoPageModule)
+    loadChildren: () =>
+      import('./nuevovehiculo/nuevovehiculo.module').then(
+        (m) => m.NuevovehiculoPageModule
+      ),
   },
   {
     path: 'editarvehiculo',
-    loadChildren: () => import('./editarvehiculo/editarvehiculo.module').then( m => m.EditarvehiculoPageModule)
-  }
+    loadChildren: () =>
+      import('./editarvehiculo/editarvehiculo.module').then(
+        (m) => m.EditarvehiculoPageModule
+      ),
+  },
+  {
+    path: 'mantenimientos',
+    loadChildren: () =>
+      import('./mantenimientos/mantenimientos.module').then(
+        (m) => m.MantenimientosPageModule
+      ),
+  },
+  {
+    path: 'nuevomantenimiento',
+    loadChildren: () => import('./nuevomantenimiento/nuevomantenimiento.module').then( m => m.NuevomantenimientoPageModule)
+  },
+  {
+    path: 'editarmantenimiento',
+    loadChildren: () => import('./editarmantenimiento/editarmantenimiento.module').then( m => m.EditarmantenimientoPageModule)
+  },
 ];
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
+    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
   ],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class AppRoutingModule {}

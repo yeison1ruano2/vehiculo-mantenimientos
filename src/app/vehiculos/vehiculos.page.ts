@@ -54,12 +54,24 @@ export class VehiculosPage implements OnInit {
           },
         },
         {
+          text: 'Mantenimientos',
+          handler: () => {
+            this.verMantenimientos(vehiculo);
+          },
+        },
+        {
           text: 'Cancelar',
           role: 'cancel',
         },
       ],
     });
     await actionSheet.present();
+  }
+
+  verMantenimientos(vehiculo: Vehiculo) {
+    this.router.navigate(['tabs/mantenimientos'], {
+      state: { vehiculo: vehiculo },
+    });
   }
 
   editarVehiculo(vehiculo: Vehiculo) {

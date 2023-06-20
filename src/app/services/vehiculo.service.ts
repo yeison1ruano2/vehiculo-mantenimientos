@@ -13,10 +13,6 @@ export class VehiculoService {
     return this.db.object(`vehiculos/${vehiculo.placa}`).set(vehiculo);
   }
 
-  obtenerVehiculo(placa: string): Observable<any> {
-    return this.db.object<Vehiculo>(`vehiculos/${placa}`).valueChanges();
-  }
-
   obtenerVehiculos(): Observable<Vehiculo[]> {
     return this.db
       .list<Vehiculo>('vehiculos', (ref) =>
