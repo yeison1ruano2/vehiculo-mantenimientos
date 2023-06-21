@@ -1,13 +1,36 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>repuestos</ion-title>
+    <ion-title>Repuestos</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">repuestos</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button routerLink="/tabs/nuevorepuesto" routerDirection="forward">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <ion-item>
+    <ion-searchbar
+      placeholder="Buscar"
+      (ionInput)="buscarTermino($event)"
+    ></ion-searchbar>
+  </ion-item>
+
+  <ion-list *ngIf="!cargando">
+    <ion-item *ngFor="let repuesto of repuestos"
+      ><ion-label
+        ><h2>{{repuesto.nombre}}</h2>
+        <p>{{repuesto.marca}}</p>
+        <p>{{repuesto.modelo}}</p></ion-label
+      >
+      <ion-avatar slot="start">
+        <ion-icon size="large" name="settings"></ion-icon> </ion-avatar
+    ></ion-item>
+  </ion-list>
+
+  <div class="overlay" *ngIf="cargando">
+    <ion-spinner></ion-spinner>
+  </div>
 </ion-content>

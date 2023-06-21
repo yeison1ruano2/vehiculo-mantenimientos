@@ -46,6 +46,10 @@ const routes: Routes = [
     path: 'editarmantenimiento',
     loadChildren: () => import('./editarmantenimiento/editarmantenimiento.module').then( m => m.EditarmantenimientoPageModule)
   },
+  {
+    path: 'nuevorepuesto',
+    loadChildren: () => import('./nuevorepuesto/nuevorepuesto.module').then( m => m.NuevorepuestoPageModule)
+  },
 ];
 @NgModule({
   imports: [

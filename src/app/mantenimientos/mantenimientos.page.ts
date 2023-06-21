@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Vehiculo } from 'src/interfaces/Vehiculo';
 import { MantenimientoService } from '../services/mantenimiento.service';
 import { Mantenimiento } from 'src/interfaces/Mantenimiento';
-import { ToastController } from '@ionic/angular';
+import { AlertController, ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-mantenimientos',
@@ -12,13 +12,13 @@ import { ToastController } from '@ionic/angular';
 })
 export class MantenimientosPage implements OnInit {
   vehiculoSeleccionado!: Vehiculo;
-  mantenimiento: Mantenimiento = {};
   mantenimientos: Mantenimiento[] = [];
 
   constructor(
     private router: Router,
     private mantenimientoService: MantenimientoService,
-    private toastCtrl: ToastController
+    private toastController: ToastController,
+    private alertController: AlertController
   ) {}
 
   ngOnInit() {
@@ -54,15 +54,33 @@ export class MantenimientosPage implements OnInit {
     });
   }
 
-  eliminarMantenimiento(id: any) {
-    this.mantenimientoService
-      .eliminarMantenimiento(this.vehiculoSeleccionado.placa, id)
-      .then(() => {
-        this.mostrarMensaje('Mantenimiento eliminado con éxito');
-      })
-      .catch(() => {
-        this.mostrarMensaje('Ocurrio un error, intentalo nuevamente');
-      });
+  async eliminarMantenimiento(id: any) {
+    const alert = this.alertController.create({
+      header: 'Confrimación',
+      message: '¿Estas seguro que deseas eliminar este mantenimiento?',
+      buttons: [
+        {
+          text: 'No',
+          role: 'Cancel',
+          cssClass: 'danger',
+        },
+        {
+          text: 'Si',
+          cssClass: 'secondary',
+          handler: () => {
+            this.mantenimientoService
+              .eliminarMantenimiento(this.vehiculoSeleccionado.placa, id)
+              .then(() => {
+                this.mostrarMensaje('Mantenimiento eliminado con éxito');
+              })
+              .catch(() => {
+                this.mostrarMensaje('Ocurrio un error, intentalo nuevamente');
+              });
+          },
+        },
+      ],
+    });
+    (await alert).present();
   }
 
   actualizarMantenimiento(mantenimiento: Mantenimiento) {
@@ -75,7 +93,7 @@ export class MantenimientosPage implements OnInit {
   }
 
   mostrarMensaje(mensaje: string) {
-    this.toastCtrl
+    this.toastController
       .create({
         message: mensaje,
         duration: 2000,
