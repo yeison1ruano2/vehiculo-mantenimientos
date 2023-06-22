@@ -34,7 +34,6 @@ export class VehiculosPage implements OnInit {
 
   listarVehiculos() {
     this.vehiculos = this.vehiculoService.obtenerVehiculos();
-    console.log(this.vehiculos);
   }
 
   async selectVehiculo(vehiculo: Vehiculo) {

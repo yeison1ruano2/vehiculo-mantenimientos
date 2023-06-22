@@ -18,14 +18,10 @@
     >
       <ion-label
         ><h2>{{vehiculo.nombre}}</h2>
-        <p>{{vehiculo.tipoVehiculo}}</p>
         <p>{{vehiculo.placa}}</p>
         <p>{{vehiculo.anio}}</p></ion-label
       >
-      <ion-avatar slot="start" *ngIf="vehiculo.tipoVehiculo == 'Carro'">
-        <ion-icon size="large" name="car"></ion-icon>
-      </ion-avatar>
-      <ion-avatar slot="start" *ngIf="vehiculo.tipoVehiculo == 'Moto'">
+      <ion-avatar slot="start">
         <ion-icon size="large" name="bicycle"></ion-icon>
       </ion-avatar>
     </ion-item>

@@ -16,10 +16,17 @@
       placeholder="Buscar"
       (ionInput)="buscarTermino($event)"
     ></ion-searchbar>
+    <ion-select slot="end" interface="popover" [(ngModel)]="opcionBuscar">
+      <ion-select-option value="nombre">Nombre</ion-select-option>
+      <ion-select-option value="proveedor">Proveedor</ion-select-option>
+      <ion-select-option value="marca">Marca</ion-select-option>
+    </ion-select>
   </ion-item>
 
   <ion-list *ngIf="!cargando">
-    <ion-item *ngFor="let repuesto of repuestos"
+    <ion-item
+      *ngFor="let repuesto of repuestos"
+      (click)="selectRepuesto(repuesto)"
       ><ion-label
         ><h2>{{repuesto.nombre}}</h2>
         <p>{{repuesto.marca}}</p>

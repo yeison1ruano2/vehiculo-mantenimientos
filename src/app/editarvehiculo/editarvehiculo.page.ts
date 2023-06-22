@@ -23,6 +23,7 @@ export class EditarvehiculoPage implements OnInit {
 
   ngOnInit() {
     this.recuperarVehiculo();
+    this.rellenarFormulario();
   }
 
   editarVehiculo() {
@@ -33,7 +34,7 @@ export class EditarvehiculoPage implements OnInit {
       .then(() => {
         this.mostrarMensaje('Vehículo actualizado con éxito');
         this.limpiarFormulario();
-        this.router.navigate(['tabs/vehiculos']);
+        this.router.navigate(['tabs/vehiculos'], { replaceUrl: true });
       })
       .catch(() => {
         console.log('Error al actualizar el vehículo');
@@ -41,24 +42,13 @@ export class EditarvehiculoPage implements OnInit {
   }
 
   limpiarFormulario() {
-    this.editarForm = this.formBuilder.group({
-      nombre: [''],
-      placa: [''],
-      tipoVehiculo: [''],
-      anio: [''],
-      color: [''],
-      marca: [''],
-    });
+    this.editarForm.reset();
   }
 
   recuperarVehiculo() {
-    let navigation = this.router.getCurrentNavigation();
-    if (navigation && navigation.extras.state) {
-      const state = navigation.extras.state;
-      if (state && state['vehiculo']) {
-        this.vehiculoSeleccionado = state['vehiculo'];
-        this.rellenarFormulario(this.vehiculoSeleccionado);
-      }
+    let navigationExtras = this.router.getCurrentNavigation()?.extras?.state;
+    if (navigationExtras && navigationExtras['vehiculo']) {
+      this.vehiculoSeleccionado = navigationExtras['vehiculo'];
     }
   }
 
@@ -71,15 +61,12 @@ export class EditarvehiculoPage implements OnInit {
           text: 'No',
           role: 'Cancel',
           cssClass: 'danger',
-          handler: (blah) => {
-            console.log(`Cancelado confirmado: ${blah}`);
-          },
         },
         {
           text: 'Si',
           cssClass: 'secondary',
           handler: () => {
-            this.router.navigateByUrl('tabs/vehiculos');
+            this.router.navigate(['tabs/vehiculos'], { replaceUrl: true });
           },
         },
       ],
@@ -87,14 +74,13 @@ export class EditarvehiculoPage implements OnInit {
     (await alert).present();
   }
 
-  rellenarFormulario(vehiculoSeleccionado: any) {
+  rellenarFormulario() {
     this.editarForm = this.formBuilder.group({
-      nombre: [vehiculoSeleccionado.nombre],
-      placa: [vehiculoSeleccionado.placa],
-      tipoVehiculo: [vehiculoSeleccionado.tipoVehiculo],
-      anio: [vehiculoSeleccionado.anio],
-      color: [vehiculoSeleccionado.color],
-      marca: [vehiculoSeleccionado.marca],
+      nombre: [this.vehiculoSeleccionado.nombre],
+      placa: [this.vehiculoSeleccionado.placa],
+      anio: [this.vehiculoSeleccionado.anio],
+      color: [this.vehiculoSeleccionado.color],
+      marca: [this.vehiculoSeleccionado.marca],
     });
   }
 

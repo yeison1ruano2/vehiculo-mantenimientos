@@ -35,12 +35,9 @@ export class MantenimientosPage implements OnInit {
   }
 
   recuperarVehiculo() {
-    let navigation = this.router.getCurrentNavigation();
-    if (navigation && navigation.extras.state) {
-      const state = navigation.extras.state;
-      if (state && state['vehiculo']) {
-        this.vehiculoSeleccionado = state['vehiculo'];
-      }
+    let navigationExtras = this.router.getCurrentNavigation()?.extras?.state;
+    if (navigationExtras && navigationExtras['vehiculo']) {
+      this.vehiculoSeleccionado = navigationExtras['vehiculo'];
     }
   }
 

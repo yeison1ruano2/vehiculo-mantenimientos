@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { NavigationExtras, Router } from '@angular/router';
 import { Mantenimiento } from 'src/interfaces/Mantenimiento';
 import { MantenimientoService } from '../services/mantenimiento.service';
 import { AlertController, ToastController } from '@ionic/angular';
@@ -46,22 +46,16 @@ export class EditarmantenimientoPage implements OnInit {
   }
 
   recuperarMantenimiento() {
-    let navigation = this.router.getCurrentNavigation();
-    if (navigation && navigation.extras.state) {
-      const state = navigation.extras.state;
-      if (state && state['mantenimiento']) {
-        this.mantenimiento = state['mantenimiento'];
-      }
+    let navigationExtras = this.router.getCurrentNavigation()?.extras?.state;
+    if (navigationExtras && navigationExtras['mantenimiento']) {
+      this.mantenimiento = navigationExtras['mantenimiento'];
     }
   }
 
   recuperarPlacaVehiculo() {
-    let navigation = this.router.getCurrentNavigation();
-    if (navigation && navigation.extras.state) {
-      const state = navigation.extras.state;
-      if (state && state['placa']) {
-        this.vehiculoPlaca = state['placa'];
-      }
+    let navigationExtras = this.router.getCurrentNavigation()?.extras?.state;
+    if (navigationExtras && navigationExtras['placa']) {
+      this.vehiculoPlaca = navigationExtras['placa'];
     }
   }
 
@@ -75,7 +69,7 @@ export class EditarmantenimientoPage implements OnInit {
         this.mostrarMensaje('Mantenimiento actualizado con éxito');
         this.limpiarFormulario();
         this.limpiarListaRepuestos();
-        this.router.navigate(['tabs/mantenimientos']);
+        this.router.navigate(['tabs/mantenimientos'], { replaceUrl: true });
       })
       .catch(() => {
         this.mostrarMensaje(
@@ -98,7 +92,7 @@ export class EditarmantenimientoPage implements OnInit {
           text: 'Si',
           cssClass: 'secondary',
           handler: () => {
-            this.router.navigate(['tabs/mantenimientos']);
+            this.router.navigate(['tabs/mantenimientos'], { replaceUrl: true });
           },
         },
       ],
@@ -107,7 +101,7 @@ export class EditarmantenimientoPage implements OnInit {
   }
 
   guardarRepuesto() {
-    const repuesto = this.editarForm.value.repuestos;
+    let repuesto = this.editarForm.value.repuestos;
     this.repuestos.push(repuesto);
     this.limpiarRepuestoFormulario();
   }
@@ -134,13 +128,14 @@ export class EditarmantenimientoPage implements OnInit {
   }
 
   limpiarFormulario() {
-    this.editarForm = this.formBuilder.group({
-      fecha: [''],
-      descripcion: [''],
-      repuestos: [''],
-      valorTotal: [''],
-      mecanico: [''],
-      numMecanico: [''],
-    });
+    this.editarForm.reset();
+    // this.editarForm = this.formBuilder.group({
+    //   fecha: [''],
+    //   descripcion: [''],
+    //   repuestos: [''],
+    //   valorTotal: [''],
+    //   mecanico: [''],
+    //   numMecanico: [''],
+    // });
   }
 }

@@ -17,16 +17,7 @@
   </ion-fab>
   <ion-list *ngIf="vehiculoSeleccionado">
     <ion-item>
-      <ion-avatar
-        slot="start"
-        *ngIf="vehiculoSeleccionado.tipoVehiculo == 'Carro'"
-      >
-        <ion-icon size="large" name="car"></ion-icon>
-      </ion-avatar>
-      <ion-avatar
-        slot="start"
-        *ngIf="vehiculoSeleccionado.tipoVehiculo == 'Moto'"
-      >
+      <ion-avatar slot="start">
         <ion-icon size="large" name="bicycle"></ion-icon>
       </ion-avatar>
       <ion-label>

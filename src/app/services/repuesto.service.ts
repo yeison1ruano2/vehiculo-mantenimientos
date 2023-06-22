@@ -40,13 +40,16 @@ export class RepuestoService {
     return this.db.object<Repuesto>(`repuestos/${id}`).update(repuesto);
   }
 
-  obtenerRepuestoPorNombre(nombre: string): Observable<Repuesto[]> {
+  obtenerRepuestoPorTermino(
+    opcionBuscar: string,
+    termino: string
+  ): Observable<Repuesto[]> {
     return this.db
       .list<Repuesto>('repuestos', (ref) =>
         ref
-          .orderByChild('nombre')
-          .startAt(nombre)
-          .endAt(nombre + '\uf8ff')
+          .orderByChild(opcionBuscar)
+          .startAt(termino)
+          .endAt(termino + '\uf8ff')
       )
       .valueChanges();
   }

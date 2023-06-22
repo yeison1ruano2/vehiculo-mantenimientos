@@ -23,7 +23,6 @@ export class NuevovehiculoPage implements OnInit {
     this.nuevoForm = this.formBuilder.group({
       nombre: [''],
       placa: [''],
-      tipoVehiculo: [''],
       anio: [''],
       color: [''],
       marca: [''],
@@ -33,7 +32,7 @@ export class NuevovehiculoPage implements OnInit {
   ngOnInit() {}
 
   regresar() {
-    this.router.navigate(['tabs/vehiculos']);
+    this.router.navigate(['tabs/vehiculos'], { replaceUrl: true });
   }
 
   crearNuevoVehiculo() {
@@ -43,7 +42,7 @@ export class NuevovehiculoPage implements OnInit {
     this.vehiculoService.crearVehiculo(this.nuevoVehiculo).then(
       () => {
         this.mostrarMensaje('Vehículo registrado con éxito');
-        this.router.navigate(['tabs/vehiculos']);
+        this.router.navigate(['tabs/vehiculos'], { replaceUrl: true });
         this.limpiarFormulario();
       },
       (err) => {
@@ -62,13 +61,6 @@ export class NuevovehiculoPage implements OnInit {
   }
 
   limpiarFormulario() {
-    this.nuevoForm = this.formBuilder.group({
-      nombre: [''],
-      placa: [''],
-      tipoVehiculo: [''],
-      anio: [''],
-      color: [''],
-      marca: [''],
-    });
+    this.nuevoForm.reset();
   }
 }

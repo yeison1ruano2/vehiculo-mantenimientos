@@ -68,6 +68,13 @@ const routes: Routes = [
             (m) => m.NuevorepuestoPageModule
           ),
       },
+      {
+        path: 'editarrepuesto',
+        loadChildren: () =>
+          import('../editarrepuesto/editarrepuesto.module').then(
+            (m) => m.EditarrepuestoPageModule
+          ),
+      },
     ],
   },
   {
