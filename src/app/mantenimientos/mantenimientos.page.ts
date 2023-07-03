@@ -13,6 +13,7 @@ import { AlertController, ToastController } from '@ionic/angular';
 export class MantenimientosPage implements OnInit {
   vehiculoSeleccionado!: Vehiculo;
   mantenimientos: Mantenimiento[] = [];
+  cargando!: boolean;
 
   constructor(
     private router: Router,
@@ -27,10 +28,12 @@ export class MantenimientosPage implements OnInit {
   }
 
   obtenerMantenimientos() {
+    this.cargando = true;
     this.mantenimientoService
       .obtenerMantenimientos(this.vehiculoSeleccionado.placa)
       .subscribe((mantenimientos) => {
         this.mantenimientos = mantenimientos;
+        this.cargando = false;
       });
   }
 

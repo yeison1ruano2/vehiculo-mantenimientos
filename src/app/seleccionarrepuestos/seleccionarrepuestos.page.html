@@ -1,0 +1,42 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Seleccionar Repuestos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-item>
+    <ion-searchbar
+      placeholder="Buscar"
+      (ionInput)="buscarTermino($event)"
+    ></ion-searchbar>
+    <ion-select slot="end" interface="popover" [(ngModel)]="opcionBuscar">
+      <ion-select-option value="nombre">Nombre</ion-select-option>
+      <ion-select-option value="proveedor">Proveedor</ion-select-option>
+      <ion-select-option value="marca">Marca</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-list *ngIf="!cargando">
+    <ion-item *ngFor="let repuesto of repuestos">
+      <ion-label>
+        <h2>{{repuesto.nombre}}</h2>
+        <p>{{repuesto.marca}}</p>
+      </ion-label>
+      <ion-button
+        fill="outline"
+        slot="end"
+        (click)="guardarRepuesto(repuesto)"
+        color="primary"
+        >Guardar</ion-button
+      >
+      <ion-avatar slot="start">
+        <ion-icon size="large" name="settings"></ion-icon>
+      </ion-avatar>
+    </ion-item>
+  </ion-list>
+
+  <div class="overlay" *ngIf="cargando">
+    <ion-spinner></ion-spinner>
+  </div>
+</ion-content>

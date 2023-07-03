@@ -10,6 +10,7 @@ import { AppComponent } from './app.component';
 
 import { AngularFireModule } from '@angular/fire/compat';
 import { environment } from 'src/environments/environment';
+import { MantenimientoRepuestosComunicacionService } from './services/mantenimiento-repuestos-comunicacion.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -20,7 +21,7 @@ import { environment } from 'src/environments/environment';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
   ],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },MantenimientoRepuestosComunicacionService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

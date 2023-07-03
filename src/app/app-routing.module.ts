@@ -54,6 +54,10 @@ const routes: Routes = [
     path: 'editarrepuesto',
     loadChildren: () => import('./editarrepuesto/editarrepuesto.module').then( m => m.EditarrepuestoPageModule)
   },
+  {
+    path: 'seleccionarrepuestos',
+    loadChildren: () => import('./seleccionarrepuestos/seleccionarrepuestos.module').then( m => m.SeleccionarrepuestosPageModule)
+  },
 ];
 @NgModule({
   imports: [

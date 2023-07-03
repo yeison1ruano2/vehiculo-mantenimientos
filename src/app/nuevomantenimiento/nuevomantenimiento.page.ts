@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { MantenimientoService } from '../services/mantenimiento.service';
 import { ToastController } from '@ionic/angular';
 import { Mantenimiento } from 'src/interfaces/Mantenimiento';
+import { MantenimientoRepuestosComunicacionService } from '../services/mantenimiento-repuestos-comunicacion.service';
 
 @Component({
   selector: 'app-nuevomantenimiento',
@@ -15,12 +16,32 @@ export class NuevomantenimientoPage implements OnInit {
   nuevoForm!: FormGroup;
   mantenimiento!: Mantenimiento;
   vehiculoPlaca!: string;
+  arregloRepuestos: string[] = [];
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
     private mantenimientoService: MantenimientoService,
-    private toastCtrl: ToastController
+    private toastCtrl: ToastController,
+    private mantenimientoRepuestosComunicacionService: MantenimientoRepuestosComunicacionService
   ) {
+    this.mantenimientoRepuestosComunicacionService.repuestos$.subscribe(
+      (repuestos) => {
+        this.repuestos = repuestos;
+        console.log(this.repuestos);
+      }
+    );
+  }
+
+  ngOnInit() {
+    this.inicializarFormulario();
+    this.recuperarPlacaVehiculo();
+  }
+
+  actualizarRepuestos(repuestos: string[]) {
+    this.mantenimientoRepuestosComunicacionService.guardarRepuestos(repuestos);
+  }
+
+  inicializarFormulario() {
     this.nuevoForm = this.formBuilder.group({
       fecha: new FormControl(''),
       descripcion: new FormControl(''),
@@ -29,10 +50,6 @@ export class NuevomantenimientoPage implements OnInit {
       mecanico: new FormControl(''),
       numMecanico: new FormControl(''),
     });
-  }
-
-  ngOnInit() {
-    this.recuperarPlacaVehiculo();
   }
 
   recuperarPlacaVehiculo() {
@@ -49,22 +66,24 @@ export class NuevomantenimientoPage implements OnInit {
     this.router.navigate(['tabs/mantenimientos']);
   }
 
+  rellenarFormulario(form: any) {
+    this.nuevoForm = this.formBuilder.group({
+      fecha: form.fecha,
+      descripcion: form.descripcion,
+      valorTotal: form.valorTotal,
+      mecanico: form.mecanico,
+      numMecanico: form.numMecanico,
+    });
+  }
+
   guardarRepuesto() {
     let repuesto = this.nuevoForm.value.repuestos;
     this.repuestos.push(repuesto);
-    this.limpiarRepuestoFormulario();
-  }
-
-  limpiarRepuestoFormulario() {
     this.nuevoForm.get('repuestos')?.setValue('');
   }
 
   eliminarRepuesto(i: number) {
     this.repuestos.splice(i, 1);
-  }
-
-  limpiarListaRepuestos() {
-    this.repuestos = [];
   }
 
   crearMantenimiento() {
@@ -76,12 +95,17 @@ export class NuevomantenimientoPage implements OnInit {
       .then(() => {
         this.mostrarMensaje('Mantenimiento registrado con éxito');
         this.limpiarFormulario();
-        this.limpiarListaRepuestos();
+        this.mantenimientoRepuestosComunicacionService.reiniciarDatos();
+        this.repuestos = [];
         this.router.navigate(['tabs/mantenimientos']);
       })
       .catch(() => {
         this.mostrarMensaje('Ocurrio un error, intentelo nuevamente!');
       });
+  }
+
+  seleccionarRepuestos() {
+    this.router.navigate(['tabs/seleccionarrepuestos'], { replaceUrl: true });
   }
 
   mostrarMensaje(mensaje: string) {
@@ -102,5 +126,12 @@ export class NuevomantenimientoPage implements OnInit {
       mecanico: [''],
       numMecanico: [''],
     });
+  }
+
+  miar() {
+    this.mantenimientoRepuestosComunicacionService.guardarFormulario(
+      this.nuevoForm
+    );
+    this.router.navigate(['tabs/seleccionarrepuestos']);
   }
 }

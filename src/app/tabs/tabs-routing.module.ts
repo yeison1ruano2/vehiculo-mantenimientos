@@ -75,6 +75,13 @@ const routes: Routes = [
             (m) => m.EditarrepuestoPageModule
           ),
       },
+      {
+        path: 'seleccionarrepuestos',
+        loadChildren: () =>
+          import('../seleccionarrepuestos/seleccionarrepuestos.module').then(
+            (m) => m.SeleccionarrepuestosPageModule
+          ),
+      },
     ],
   },
   {

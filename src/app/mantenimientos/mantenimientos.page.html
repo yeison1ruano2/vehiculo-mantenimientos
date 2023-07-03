@@ -31,7 +31,7 @@
     <h3>Mantenimientos</h3>
   </div>
 
-  <ion-list>
+  <ion-list *ngIf="!cargando">
     <ion-item-sliding *ngFor="let mantenimiento of mantenimientos">
       <ion-item>
         <ion-icon slot="start" name="settings"></ion-icon>
@@ -82,4 +82,7 @@
       </ion-item-options>
     </ion-item-sliding>
   </ion-list>
+  <div class="overlay" *ngIf="cargando">
+    <ion-spinner></ion-spinner>
+  </div>
 </ion-content>
